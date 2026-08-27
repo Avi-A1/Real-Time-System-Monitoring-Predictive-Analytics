@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart System Monitor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <h1>Smart System Monitor</h1>
+            <p>Real-Time System Monitoring & Predictive Analytics</p>
+        </div>
+
+        <div class="status">
+            <span id="status-dot"></span>
+            <span id="status-text">Connecting...</span>
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- System Metrics -->
+
+        <section class="metrics">
+
+            <div class="metric-card">
+                <h3>CPU Usage</h3>
+                <div class="metric-value" id="cpu-value">--%</div>
+            </div>
+
+            <div class="metric-card">
+                <h3>Memory Usage</h3>
+                <div class="metric-value" id="memory-value">--%</div>
+            </div>
+
+            <div class="metric-card">
+                <h3>Disk Usage</h3>
+                <div class="metric-value" id="disk-value">--%</div>
+            </div>
+
+            <div class="metric-card">
+                <h3>Running Processes</h3>
+                <div class="metric-value" id="process-value">--</div>
+            </div>
+
+        </section>
+
+
+        <!-- Charts -->
+
+        <section class="charts">
+
+            <div class="chart-card">
+                <h2>CPU Usage</h2>
+                <canvas id="cpu-chart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h2>Memory Usage</h2>
+                <canvas id="memory-chart"></canvas>
+            </div>
+
+        </section>
+
+
+        <!-- Network -->
+
+        <section class="network-card">
+
+            <h2>Network Activity</h2>
+
+            <div class="network-info">
+
+                <div>
+                    <span>Data Sent</span>
+                    <strong id="network-sent">--</strong>
+                </div>
+
+                <div>
+                    <span>Data Received</span>
+                    <strong id="network-received">--</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI section - we'll connect this later -->
+
+        <section class="ai-card">
+
+            <h2>AI System Analysis</h2>
+
+            <div class="ai-status">
+                <span id="ai-status">Waiting for ML analysis...</span>
+            </div>
+
+            <p id="ai-message">
+                AI analysis will appear here once the machine-learning module is connected.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>Smart System Monitor • Real-Time System Monitoring & Predictive Analytics</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

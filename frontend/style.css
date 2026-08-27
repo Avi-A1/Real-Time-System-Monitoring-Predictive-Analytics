@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #1f2937;
+}
+
+header {
+    background: #ffffff;
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+header p {
+    color: #6b7280;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+
+#status-dot {
+    width: 10px;
+    height: 10px;
+    background: #999;
+    border-radius: 50%;
+}
+
+main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.metric-card,
+.chart-card,
+.network-card,
+.ai-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+}
+
+.metric-card h3 {
+    color: #6b7280;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.chart-card h2,
+.network-card h2,
+.ai-card h2 {
+    margin-bottom: 20px;
+}
+
+.network-card {
+    margin-bottom: 25px;
+}
+
+.network-info {
+    display: flex;
+    gap: 80px;
+}
+
+.network-info span {
+    display: block;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.network-info strong {
+    font-size: 20px;
+}
+
+.ai-card {
+    margin-bottom: 30px;
+}
+
+.ai-status {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#ai-message {
+    color: #6b7280;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #6b7280;
+}
+
+@media (max-width: 800px) {
+
+    .metrics {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .charts {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .network-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
