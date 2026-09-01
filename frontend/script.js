@@ -1,188 +1,180 @@
-const API_URL = "http://127.0.0.1:8000";
+let cpu = 42;
+let memory = 61;
+let disk = 68;
+let network = 24;
 
-let cpuChart;
-let memoryChart;
+const cpuText = document.getElementById("cpu");
+const memoryText = document.getElementById("memory");
+const diskText = document.getElementById("disk");
+const networkText = document.getElementById("network");
 
-const maxDataPoints = 20;
+const cpuBar = document.getElementById("cpuBar");
+const memoryBar = document.getElementById("memoryBar");
+const diskBar = document.getElementById("diskBar");
 
-
-// Format bytes into readable units
-function formatBytes(bytes) {
-
-    if (bytes < 1024) {
-        return bytes + " B";
-    }
-
-    if (bytes < 1024 * 1024) {
-        return (bytes / 1024).toFixed(2) + " KB";
-    }
-
-    if (bytes < 1024 * 1024 * 1024) {
-        return (bytes / (1024 * 1024)).toFixed(2) + " MB";
-    }
-
-    return (bytes / (1024 * 1024 * 1024)).toFixed(2) + " GB";
-}
+const timeText = document.getElementById("time");
 
 
-// Update the metric cards
-function updateMetrics(data) {
+/* CHART */
 
-    document.getElementById("cpu-value").textContent =
-        data.cpu.toFixed(1) + "%";
+const ctx = document.getElementById("cpuChart");
 
-    document.getElementById("memory-value").textContent =
-        data.memory.toFixed(1) + "%";
+const labels = [
+    "10:00",
+    "10:05",
+    "10:10",
+    "10:15",
+    "10:20",
+    "10:25",
+    "10:30",
+    "Now"
+];
 
-    document.getElementById("disk-value").textContent =
-        data.disk.toFixed(1) + "%";
-
-    document.getElementById("process-value").textContent =
-        data.running_processes;
-
-    document.getElementById("network-sent").textContent =
-        formatBytes(data.network_sent);
-
-    document.getElementById("network-received").textContent =
-        formatBytes(data.network_received);
-}
-
-
-// Update connection status
-function updateStatus(connected) {
-
-    const dot = document.getElementById("status-dot");
-    const text = document.getElementById("status-text");
-
-    if (connected) {
-        dot.style.background = "#22c55e";
-        text.textContent = "Connected";
-    } else {
-        dot.style.background = "#ef4444";
-        text.textContent = "Disconnected";
-    }
-}
+const values = [
+    35,
+    48,
+    43,
+    58,
+    45,
+    52,
+    40,
+    42
+];
 
 
-// Create charts
-function createCharts() {
+const cpuChart = new Chart(ctx, {
 
-    const cpuContext =
-        document.getElementById("cpu-chart").getContext("2d");
+    type: "line",
 
-    const memoryContext =
-        document.getElementById("memory-chart").getContext("2d");
+    data: {
 
+        labels: labels,
 
-    cpuChart = new Chart(cpuContext, {
+        datasets: [
 
-        type: "line",
+            {
+                label: "CPU Usage",
 
-        data: {
-            labels: [],
-            datasets: [{
-                label: "CPU %",
-                data: [],
-                tension: 0.3
-            }]
+                data: values,
+
+                borderColor: "#4f46e5",
+
+                backgroundColor: "rgba(79,70,229,0.08)",
+
+                borderWidth: 3,
+
+                fill: true,
+
+                tension: 0.4,
+
+                pointRadius: 3,
+
+                pointBackgroundColor: "#4f46e5"
+            }
+
+        ]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+                display: false
+            }
+
         },
 
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
+        scales: {
+
+            y: {
+
+                min: 0,
+
+                max: 100,
+
+                ticks: {
+
+                    callback: function(value) {
+                        return value + "%";
+                    }
+
                 }
+
             }
+
         }
-    });
+
+    }
+
+});
 
 
-    memoryChart = new Chart(memoryContext, {
+/* UPDATE DASHBOARD */
 
-        type: "line",
+function updateDashboard() {
 
-        data: {
-            labels: [],
-            datasets: [{
-                label: "Memory %",
-                data: [],
-                tension: 0.3
-            }]
-        },
+    cpu = Math.floor(Math.random() * 35) + 35;
 
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
-                }
-            }
-        }
-    });
-}
+    memory = Math.floor(Math.random() * 25) + 45;
+
+    disk = Math.floor(Math.random() * 10) + 65;
+
+    network = Math.floor(Math.random() * 20) + 15;
 
 
-// Add data to charts
-function updateCharts(data) {
+    cpuText.textContent = cpu + "%";
 
-    const time = new Date().toLocaleTimeString();
+    memoryText.textContent = memory + "%";
 
-    cpuChart.data.labels.push(time);
-    cpuChart.data.datasets[0].data.push(data.cpu);
+    diskText.textContent = disk + "%";
 
-    memoryChart.data.labels.push(time);
-    memoryChart.data.datasets[0].data.push(data.memory);
+    networkText.textContent = network + " MB/s";
 
 
-    if (cpuChart.data.labels.length > maxDataPoints) {
+    cpuBar.style.width = cpu + "%";
+
+    memoryBar.style.width = memory + "%";
+
+    diskBar.style.width = disk + "%";
+
+
+    const now = new Date();
+
+    timeText.textContent =
+        now.getHours().toString().padStart(2, "0") +
+        ":" +
+        now.getMinutes().toString().padStart(2, "0") +
+        ":" +
+        now.getSeconds().toString().padStart(2, "0");
+
+
+    /* Update chart */
+
+    cpuChart.data.labels.push("Now");
+
+    cpuChart.data.datasets[0].data.push(cpu);
+
+
+    if (cpuChart.data.labels.length > 12) {
 
         cpuChart.data.labels.shift();
+
         cpuChart.data.datasets[0].data.shift();
 
-        memoryChart.data.labels.shift();
-        memoryChart.data.datasets[0].data.shift();
     }
 
 
     cpuChart.update();
-    memoryChart.update();
+
 }
 
 
-// Get current system information
-async function fetchSystemData() {
+/* Every 2 seconds */
 
-    try {
-
-        const response =
-            await fetch(`${API_URL}/system`);
-
-        if (!response.ok) {
-            throw new Error("API request failed");
-        }
-
-        const data = await response.json();
-
-        updateMetrics(data);
-        updateCharts(data);
-        updateStatus(true);
-
-    } catch (error) {
-
-        console.error("Connection error:", error);
-
-        updateStatus(false);
-    }
-}
-
-
-// Start application
-createCharts();
-
-fetchSystemData();
-
-// Update dashboard every 5 seconds
-setInterval(fetchSystemData, 5000);
+setInterval(updateDashboard, 2000);
