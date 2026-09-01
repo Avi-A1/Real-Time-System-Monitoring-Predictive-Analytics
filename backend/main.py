@@ -2,7 +2,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from system_monitor import get_system_stats
-
 import asyncio
 import sys
 from pathlib import Path
