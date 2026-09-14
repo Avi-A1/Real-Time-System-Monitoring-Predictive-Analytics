@@ -1,76 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
     <title>Smart System Analytics</title>
 
-    <link rel="stylesheet" href="style.css">
+    <!-- Existing team CSS -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"
+    ></script>
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
-    <!-- Sidebar -->
+
+    <!-- ========================================== -->
+    <!-- SIDEBAR -->
+    <!-- ========================================== -->
+
     <aside class="sidebar">
 
         <div class="logo">
-            <div class="logo-box">S</div>
+
+            <div class="logo-box">
+                S
+            </div>
 
             <div>
-                <h2>Smart System</h2>
-                <span>Analytics</span>
+
+                <h2>
+                    Smart System
+                </h2>
+
+                <span>
+                    Analytics
+                </span>
+
             </div>
+
         </div>
 
+
         <nav>
-            <a href="#" class="active">⌂ <span>Dashboard</span></a>
-            <a href="#">◉ <span>Monitoring</span></a>
-            <a href="#">▣ <span>Analytics</span></a>
-            <a href="#">↗ <span>Predictions</span></a>
-            <a href="#">⚠ <span>Alerts</span></a>
-            <a href="#">⚙ <span>Settings</span></a>
+
+            <a
+                href="#"
+                class="active"
+            >
+                ⌂
+                <span>
+                    Dashboard
+                </span>
+            </a>
+
+
+            <a href="#">
+
+                ◉
+
+                <span>
+                    Monitoring
+                </span>
+
+            </a>
+
+
+            <a href="#">
+
+                ▣
+
+                <span>
+                    Analytics
+                </span>
+
+            </a>
+
+
+            <a href="#">
+
+                ↗
+
+                <span>
+                    Predictions
+                </span>
+
+            </a>
+
+
+            <a href="#">
+
+                ⚠
+
+                <span>
+                    Alerts
+                </span>
+
+            </a>
+
+
+            <a href="#">
+
+                ⚙
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
         </nav>
 
+
         <div class="online">
+
             <span class="online-dot"></span>
+
             System Online
+
         </div>
 
     </aside>
 
 
-    <!-- Main -->
+
+    <!-- ========================================== -->
+    <!-- MAIN -->
+    <!-- ========================================== -->
+
     <main class="main">
 
-        <!-- Header -->
+
+        <!-- ====================================== -->
+        <!-- HEADER -->
+        <!-- ====================================== -->
+
         <header class="header">
 
             <div>
-                <p class="welcome">WELCOME BACK</p>
-                <h1>System Dashboard</h1>
+
+                <p class="welcome">
+                    WELCOME BACK
+                </p>
+
+                <h1>
+                    System Dashboard
+                </h1>
+
                 <p class="subtitle">
                     Monitor and analyze your system in real time.
                 </p>
+
             </div>
+
 
             <div class="header-right">
 
                 <div class="live-badge">
+
                     <span></span>
+
                     LIVE
+
                 </div>
+
 
                 <div class="notification">
+
                     🔔
+
                 </div>
 
+
                 <div class="avatar">
+
                     DU
+
                 </div>
 
             </div>
@@ -78,7 +199,11 @@
         </header>
 
 
-        <!-- Health -->
+
+        <!-- ====================================== -->
+        <!-- SYSTEM HEALTH -->
+        <!-- ====================================== -->
+
         <div class="health">
 
             <div class="health-left">
@@ -87,263 +212,600 @@
                     ✓
                 </div>
 
+
                 <div>
-                    <strong>System Healthy</strong>
-                    <p>All monitored components are operating normally.</p>
+
+                    <strong>
+                        System Healthy
+                    </strong>
+
+                    <p>
+                        All monitored components are operating normally.
+                    </p>
+
                 </div>
 
             </div>
 
+
             <div class="updated">
-                Last updated: <strong id="time">Just now</strong>
+
+                Last updated:
+
+                <strong id="time">
+                    Just now
+                </strong>
+
             </div>
 
         </div>
 
 
-        <!-- Stats -->
+
+        <!-- ====================================== -->
+        <!-- SYSTEM STATISTICS -->
+        <!-- ====================================== -->
+
         <section class="stats">
 
+
+            <!-- CPU -->
+
             <div class="stat-card">
 
                 <div class="stat-top">
-                    <span>CPU Usage</span>
-                    <div class="stat-icon cpu-icon">CPU</div>
+
+                    <span>
+                        CPU Usage
+                    </span>
+
+                    <div class="stat-icon cpu-icon">
+                        CPU
+                    </div>
+
                 </div>
 
-                <h2 id="cpu">42%</h2>
+
+                <!-- UPDATED: dynamic value -->
+
+                <h2 id="cpu">
+                    --%
+                </h2>
+
 
                 <div class="progress">
-                    <div id="cpuBar"></div>
+
+                    <div
+                        id="cpuBar"
+                        style="width: 0%;"
+                    ></div>
+
                 </div>
 
-                <p>Processor utilization</p>
 
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-                    <span>Memory Usage</span>
-                    <div class="stat-icon ram-icon">RAM</div>
-                </div>
-
-                <h2 id="memory">61%</h2>
-
-                <div class="progress">
-                    <div id="memoryBar"></div>
-                </div>
-
-                <p>Memory utilization</p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-                    <span>Disk Usage</span>
-                    <div class="stat-icon disk-icon">DISK</div>
-                </div>
-
-                <h2 id="disk">68%</h2>
-
-                <div class="progress">
-                    <div id="diskBar"></div>
-                </div>
-
-                <p>Storage utilization</p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-                    <span>Network</span>
-                    <div class="stat-icon network-icon">NET</div>
-                </div>
-
-                <h2 id="network">24 MB/s</h2>
-
-                <p class="stable">
-                    ● Stable connection
+                <p>
+                    Processor utilization
                 </p>
 
             </div>
 
+
+
+            <!-- MEMORY -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>
+                        Memory Usage
+                    </span>
+
+                    <div class="stat-icon ram-icon">
+                        RAM
+                    </div>
+
+                </div>
+
+
+                <!-- UPDATED: dynamic value -->
+
+                <h2 id="memory">
+                    --%
+                </h2>
+
+
+                <div class="progress">
+
+                    <div
+                        id="memoryBar"
+                        style="width: 0%;"
+                    ></div>
+
+                </div>
+
+
+                <p>
+                    Memory utilization
+                </p>
+
+            </div>
+
+
+
+            <!-- DISK -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>
+                        Disk Usage
+                    </span>
+
+                    <div class="stat-icon disk-icon">
+                        DISK
+                    </div>
+
+                </div>
+
+
+                <!-- UPDATED: dynamic value -->
+
+                <h2 id="disk">
+                    --%
+                </h2>
+
+
+                <div class="progress">
+
+                    <div
+                        id="diskBar"
+                        style="width: 0%;"
+                    ></div>
+
+                </div>
+
+
+                <p>
+                    Storage utilization
+                </p>
+
+            </div>
+
+
+
+            <!-- NETWORK -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>
+                        Network
+                    </span>
+
+                    <div class="stat-icon network-icon">
+                        NET
+                    </div>
+
+                </div>
+
+
+                <!-- UPDATED: dynamic value -->
+
+                <h2 id="network">
+                    -- MB/s
+                </h2>
+
+
+                <p class="stable">
+                    ● Live network activity
+                </p>
+
+            </div>
+
+
         </section>
 
 
-        <!-- Charts -->
+
+        <!-- ====================================== -->
+        <!-- CHART + AI PREDICTION -->
+        <!-- ====================================== -->
+
         <section class="dashboard-grid">
 
+
+            <!-- ================================== -->
+            <!-- CPU CHART -->
+            <!-- ================================== -->
+
             <div class="panel chart-panel">
+
 
                 <div class="panel-title">
 
                     <div>
-                        <h2>System Performance</h2>
-                        <p>Real-time CPU monitoring</p>
+
+                        <h2>
+                            System Performance
+                        </h2>
+
+                        <p>
+                            Real-time CPU monitoring
+                        </p>
+
                     </div>
 
-                    <select>
-                        <option>Last 30 Minutes</option>
-                        <option>Last 1 Hour</option>
-                        <option>Last 24 Hours</option>
+
+                    <select id="chartRange">
+
+                        <option value="30">
+                            Last 30 Minutes
+                        </option>
+
+                        <option value="60">
+                            Last 1 Hour
+                        </option>
+
+                        <option value="1440">
+                            Last 24 Hours
+                        </option>
+
                     </select>
 
                 </div>
 
+
                 <div class="chart">
+
                     <canvas id="cpuChart"></canvas>
+
                 </div>
 
             </div>
 
 
-            <!-- Prediction -->
+
+            <!-- ================================== -->
+            <!-- AI PREDICTION -->
+            <!-- ================================== -->
+
             <div class="panel prediction-panel">
+
 
                 <div class="panel-title">
 
                     <div>
-                        <h2>AI Prediction</h2>
-                        <p>System load forecast</p>
+
+                        <h2>
+                            AI Prediction
+                        </h2>
+
+                        <p>
+                            System load forecast
+                        </p>
+
                     </div>
 
-                    <span class="ai-badge">AI</span>
+
+                    <span class="ai-badge">
+                        AI
+                    </span>
 
                 </div>
+
 
                 <div class="ai-symbol">
                     ✦
                 </div>
 
+
                 <p class="prediction-label">
                     Expected CPU Load
                 </p>
 
-                <h3>57%</h3>
 
-                <p class="prediction-description">
-                    CPU usage is expected to increase slightly
-                    during the next 10 minutes.
+                <!-- IMPORTANT:
+                     This ID connects to /prediction -->
+
+                <h3 id="predictionValue">
+                    --%
+                </h3>
+
+
+                <!-- IMPORTANT:
+                     Updated by JavaScript -->
+
+                <p
+                    id="predictionDescription"
+                    class="prediction-description"
+                >
+                    Waiting for ML prediction...
                 </p>
 
-                <div class="prediction-status">
-                    ↗ Slight increase expected
+
+                <!-- IMPORTANT:
+                     Updated by JavaScript -->
+
+                <div
+                    id="predictionStatus"
+                    class="prediction-status"
+                >
+                    Waiting for prediction...
                 </div>
 
             </div>
 
+
         </section>
 
 
-        <!-- Bottom -->
+
+        <!-- ====================================== -->
+        <!-- ALERTS + SYSTEM INFORMATION -->
+        <!-- ====================================== -->
+
         <section class="bottom-grid">
 
-            <!-- Alerts -->
+
+            <!-- ================================== -->
+            <!-- SYSTEM ALERTS -->
+            <!-- ================================== -->
+
             <div class="panel">
+
 
                 <div class="panel-title">
 
                     <div>
-                        <h2>System Alerts</h2>
-                        <p>Recent system notifications</p>
+
+                        <h2>
+                            System Alerts
+                        </h2>
+
+                        <p>
+                            Recent system notifications
+                        </p>
+
                     </div>
 
-                    <button>View All</button>
+
+                    <button>
+                        View All
+                    </button>
 
                 </div>
 
+
+
+                <!-- ================================= -->
+                <!-- ML ANOMALY RESULT -->
+                <!-- ================================= -->
 
                 <div class="alert warning">
 
-                    <div class="alert-symbol">!</div>
+                    <div class="alert-symbol">
+                        !
+                    </div>
+
 
                     <div>
-                        <strong>Memory usage is moderate</strong>
-                        <p>Memory usage has crossed 60%.</p>
+
+                        <!-- Updated from /anomaly -->
+
+                        <strong id="anomalyTitle">
+                            Checking system...
+                        </strong>
+
+
+                        <!-- Updated from /anomaly -->
+
+                        <p id="anomalyDescription">
+                            Waiting for anomaly detection...
+                        </p>
+
+
+                        <!-- Updated from /anomaly -->
+
+                        <small id="anomalyStatus">
+                            Severity: --
+                        </small>
+
                     </div>
 
                 </div>
 
+
+
+                <!-- ================================= -->
+                <!-- CPU ALERT -->
+                <!-- ================================= -->
 
                 <div class="alert success">
 
-                    <div class="alert-symbol">✓</div>
+                    <div class="alert-symbol">
+                        ✓
+                    </div>
+
 
                     <div>
-                        <strong>Disk status normal</strong>
-                        <p>Storage is within safe limits.</p>
+
+                        <strong>
+                            CPU monitoring active
+                        </strong>
+
+                        <p>
+                            Real-time CPU monitoring is active.
+                        </p>
+
                     </div>
 
                 </div>
 
+
+
+                <!-- ================================= -->
+                <!-- NETWORK ALERT -->
+                <!-- ================================= -->
 
                 <div class="alert success">
 
-                    <div class="alert-symbol">✓</div>
+                    <div class="alert-symbol">
+                        ✓
+                    </div>
+
 
                     <div>
-                        <strong>Network stable</strong>
-                        <p>No network problems detected.</p>
+
+                        <strong>
+                            Network monitoring active
+                        </strong>
+
+                        <p>
+                            Live network activity is being monitored.
+                        </p>
+
                     </div>
 
                 </div>
+
 
             </div>
 
 
-            <!-- System Information -->
+
+            <!-- ================================== -->
+            <!-- SYSTEM INFORMATION -->
+            <!-- ================================== -->
+
             <div class="panel">
+
 
                 <div class="panel-title">
 
                     <div>
-                        <h2>System Information</h2>
-                        <p>Current machine details</p>
+
+                        <h2>
+                            System Information
+                        </h2>
+
+                        <p>
+                            Current machine details
+                        </p>
+
                     </div>
 
                 </div>
 
-                <div class="info">
-                    <span>Operating System</span>
-                    <strong>Windows 11</strong>
-                </div>
+
+
+                <!-- Operating System -->
 
                 <div class="info">
-                    <span>Processor</span>
-                    <strong>Intel Core i5</strong>
+
+                    <span>
+                        Operating System
+                    </span>
+
+
+                    <!-- ID added for future backend data -->
+
+                    <strong id="operatingSystem">
+                        Detecting...
+                    </strong>
+
                 </div>
 
-                <div class="info">
-                    <span>RAM</span>
-                    <strong>16 GB</strong>
-                </div>
+
+
+                <!-- Processor -->
 
                 <div class="info">
-                    <span>Monitoring</span>
-                    <strong class="active">Active</strong>
+
+                    <span>
+                        Processor
+                    </span>
+
+
+                    <!-- ID added so we can remove hardcoded Intel -->
+
+                    <strong id="processor">
+                        Detecting...
+                    </strong>
+
                 </div>
+
+
+
+                <!-- RAM -->
+
+                <div class="info">
+
+                    <span>
+                        RAM
+                    </span>
+
+
+                    <!-- ID added so we can remove hardcoded 16 GB -->
+
+                    <strong id="ram">
+                        Detecting...
+                    </strong>
+
+                </div>
+
+
+
+                <!-- Monitoring -->
+
+                <div class="info">
+
+                    <span>
+                        Monitoring
+                    </span>
+
+
+                    <strong class="active">
+                        Active
+                    </strong>
+
+                </div>
+
 
             </div>
+
 
         </section>
 
 
+
+        <!-- ====================================== -->
+        <!-- FOOTER -->
+        <!-- ====================================== -->
+
         <footer>
+
             Smart System Analytics © 2026
+
         </footer>
 
+
     </main>
+
 
 </div>
 
 
+
+<!-- ========================================== -->
+<!-- JAVASCRIPT -->
+<!-- ========================================== -->
+
 <script src="script.js"></script>
 
+
 </body>
+
 </html>

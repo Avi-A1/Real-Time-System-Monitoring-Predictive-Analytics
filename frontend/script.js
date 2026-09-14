@@ -1,79 +1,74 @@
-let cpu = 42;
-let memory = 61;
-let disk = 68;
-let network = 24;
+const API_BASE = "http://127.0.0.1:8000";
 
-const cpuText = document.getElementById("cpu");
-const memoryText = document.getElementById("memory");
-const diskText = document.getElementById("disk");
-const networkText = document.getElementById("network");
+/* =========================
+   ELEMENTS
+========================= */
+
+const cpu = document.getElementById("cpu");
+const memory = document.getElementById("memory");
+const disk = document.getElementById("disk");
+const network = document.getElementById("network");
 
 const cpuBar = document.getElementById("cpuBar");
 const memoryBar = document.getElementById("memoryBar");
 const diskBar = document.getElementById("diskBar");
 
-const timeText = document.getElementById("time");
+const time = document.getElementById("time");
+
+const operatingSystem =
+    document.getElementById("operatingSystem");
+
+const processor =
+    document.getElementById("processor");
+
+const ram =
+    document.getElementById("ram");
+
+const predictionValue =
+    document.getElementById("predictionValue");
+
+const predictionDescription =
+    document.getElementById("predictionDescription");
+
+const predictionStatus =
+    document.getElementById("predictionStatus");
+
+const anomalyTitle =
+    document.getElementById("anomalyTitle");
+
+const anomalyDescription =
+    document.getElementById("anomalyDescription");
+
+const anomalyStatus =
+    document.getElementById("anomalyStatus");
+
+const chartRange =
+    document.getElementById("chartRange");
 
 
-/* CHART */
+/* =========================
+   CPU CHART
+========================= */
 
-const ctx = document.getElementById("cpuChart");
-
-const labels = [
-    "10:00",
-    "10:05",
-    "10:10",
-    "10:15",
-    "10:20",
-    "10:25",
-    "10:30",
-    "Now"
-];
-
-const values = [
-    35,
-    48,
-    43,
-    58,
-    45,
-    52,
-    40,
-    42
-];
-
+const ctx =
+    document.getElementById("cpuChart");
 
 const cpuChart = new Chart(ctx, {
 
     type: "line",
 
     data: {
-
-        labels: labels,
-
-        datasets: [
-
-            {
-                label: "CPU Usage",
-
-                data: values,
-
-                borderColor: "#4f46e5",
-
-                backgroundColor: "rgba(79,70,229,0.08)",
-
-                borderWidth: 3,
-
-                fill: true,
-
-                tension: 0.4,
-
-                pointRadius: 3,
-
-                pointBackgroundColor: "#4f46e5"
-            }
-
-        ]
-
+        labels: [],
+        datasets: [{
+            label: "CPU Usage",
+            data: [],
+            borderColor: "#4f46e5",
+            backgroundColor: "rgba(79,70,229,0.08)",
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 3
+        }]
     },
 
     options: {
@@ -82,99 +77,425 @@ const cpuChart = new Chart(ctx, {
 
         maintainAspectRatio: false,
 
-        plugins: {
+        animation: false,
 
+        plugins: {
             legend: {
                 display: false
             }
-
         },
 
         scales: {
 
             y: {
-
                 min: 0,
-
                 max: 100,
 
                 ticks: {
-
-                    callback: function(value) {
-                        return value + "%";
-                    }
-
+                    callback: value =>
+                        value + "%"
                 }
-
             }
-
         }
-
     }
-
 });
 
 
-/* UPDATE DASHBOARD */
+/* =========================
+   TIME
+========================= */
 
-function updateDashboard() {
-
-    cpu = Math.floor(Math.random() * 35) + 35;
-
-    memory = Math.floor(Math.random() * 25) + 45;
-
-    disk = Math.floor(Math.random() * 10) + 65;
-
-    network = Math.floor(Math.random() * 20) + 15;
-
-
-    cpuText.textContent = cpu + "%";
-
-    memoryText.textContent = memory + "%";
-
-    diskText.textContent = disk + "%";
-
-    networkText.textContent = network + " MB/s";
-
-
-    cpuBar.style.width = cpu + "%";
-
-    memoryBar.style.width = memory + "%";
-
-    diskBar.style.width = disk + "%";
-
+function updateTime() {
 
     const now = new Date();
 
-    timeText.textContent =
-        now.getHours().toString().padStart(2, "0") +
-        ":" +
-        now.getMinutes().toString().padStart(2, "0") +
-        ":" +
-        now.getSeconds().toString().padStart(2, "0");
-
-
-    /* Update chart */
-
-    cpuChart.data.labels.push("Now");
-
-    cpuChart.data.datasets[0].data.push(cpu);
-
-
-    if (cpuChart.data.labels.length > 12) {
-
-        cpuChart.data.labels.shift();
-
-        cpuChart.data.datasets[0].data.shift();
-
-    }
-
-
-    cpuChart.update();
-
+    time.textContent =
+        now.toLocaleTimeString();
 }
 
 
-/* Every 2 seconds */
+/* =========================
+   SYSTEM INFORMATION
+========================= */
 
-setInterval(updateDashboard, 2000);
+async function updateSystem() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/system`
+            );
+
+        const data =
+            await response.json();
+
+
+        /* CPU */
+
+        cpu.textContent =
+            `${Number(data.cpu).toFixed(1)}%`;
+
+        cpuBar.style.width =
+            `${data.cpu}%`;
+
+
+        /* MEMORY */
+
+        memory.textContent =
+            `${Number(data.memory).toFixed(1)}%`;
+
+        memoryBar.style.width =
+            `${data.memory}%`;
+
+
+        /* DISK */
+
+        disk.textContent =
+            `${Number(data.disk).toFixed(1)}%`;
+
+        diskBar.style.width =
+            `${data.disk}%`;
+
+
+        /* NETWORK */
+
+        const download = Number(data.network_download_speed);
+
+        if (Number.isFinite(download)) {
+            network.textContent = `${download.toFixed(2)} MB/s`;
+        } else {
+            network.textContent = "0.00 MB/s";
+        }
+
+        /* SYSTEM INFORMATION */
+
+        operatingSystem.textContent =
+            data.operating_system || "Unknown";
+
+        processor.textContent =
+            data.processor || "Unknown";
+
+        ram.textContent =
+            data.ram || "Unknown";
+
+
+        updateTime();
+
+    } catch (error) {
+
+        console.error(
+            "System error:",
+            error
+        );
+    }
+}
+
+
+/* =========================
+   CPU HISTORY / CHART
+========================= */
+
+async function updateChart() {
+
+    try {
+
+        let limit = 30;
+
+        if (
+            chartRange &&
+            chartRange.value
+        ) {
+
+            limit =
+                parseInt(
+                    chartRange.value
+                ) || 30;
+        }
+
+
+        const response =
+            await fetch(
+                `${API_BASE}/history?limit=${limit}`
+            );
+
+        const result =
+            await response.json();
+
+
+        const history =
+            Array.isArray(result)
+                ? result
+                : result.history ||
+                  result.data ||
+                  [];
+
+
+        const labels = [];
+        const values = [];
+
+
+        history.forEach(row => {
+
+            /*
+             * SQLite row:
+             * [id, timestamp, cpu, ...]
+             */
+
+            if (Array.isArray(row)) {
+
+                labels.push(
+                    new Date(
+                        row[1]
+                    ).toLocaleTimeString()
+                );
+
+                values.push(
+                    Number(row[2])
+                );
+
+            } else {
+
+                labels.push(
+                    new Date(
+                        row.timestamp
+                    ).toLocaleTimeString()
+                );
+
+                values.push(
+                    Number(row.cpu)
+                );
+            }
+        });
+
+
+        if (values.length === 0) {
+            return;
+        }
+
+
+        cpuChart.data.labels =
+            labels;
+
+        cpuChart.data.datasets[0].data =
+            values;
+
+
+        /*
+         * Update without animation.
+         */
+
+        cpuChart.update("none");
+
+    } catch (error) {
+
+        console.error(
+            "Chart error:",
+            error
+        );
+    }
+}
+
+
+/* =========================
+   AI PREDICTION
+========================= */
+
+async function updatePrediction() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/prediction`
+            );
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.status !==
+            "success"
+        ) {
+            return;
+        }
+
+
+        const predicted =
+            Number(
+                data.predicted_future_cpu
+            );
+
+        const current =
+            Number(
+                data.current_cpu
+            );
+
+
+        predictionValue.textContent =
+            `${predicted.toFixed(1)}%`;
+
+
+        if (
+            predicted >
+            current + 2
+        ) {
+
+            predictionDescription.textContent =
+                "CPU usage is expected to increase.";
+
+            predictionStatus.textContent =
+                "↗ Increase expected";
+
+        } else if (
+            predicted <
+            current - 2
+        ) {
+
+            predictionDescription.textContent =
+                "CPU usage is expected to decrease.";
+
+            predictionStatus.textContent =
+                "↘ Decrease expected";
+
+        } else {
+
+            predictionDescription.textContent =
+                "CPU usage is expected to remain stable.";
+
+            predictionStatus.textContent =
+                "→ Stable usage expected";
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Prediction error:",
+            error
+        );
+    }
+}
+
+
+/* =========================
+   ANOMALY DETECTION
+========================= */
+
+async function updateAnomaly() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/anomaly`
+            );
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.status !==
+            "success"
+        ) {
+            return;
+        }
+
+
+        anomalyTitle.textContent =
+            data.anomaly
+                ? "Anomaly"
+                : "Normal";
+
+
+        anomalyDescription.textContent =
+            data.reason ||
+            "System metrics are within the learned normal pattern.";
+
+
+        anomalyStatus.textContent =
+            `Severity: ${
+                data.severity || "NONE"
+            }`;
+
+    } catch (error) {
+
+        console.error(
+            "Anomaly error:",
+            error
+        );
+    }
+}
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+async function loadDashboard() {
+
+    await Promise.all([
+        updateSystem(),
+        updateChart(),
+        updatePrediction(),
+        updateAnomaly()
+    ]);
+
+    updateTime();
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadDashboard();
+
+
+/* =========================
+   REAL-TIME UPDATE
+========================= */
+
+setInterval(
+    updateSystem,
+    5000
+);
+
+setInterval(
+    updateChart,
+    5000
+);
+
+setInterval(
+    updatePrediction,
+    5000
+);
+
+setInterval(
+    updateAnomaly,
+    5000
+);
+
+
+/* =========================
+   CLOCK
+========================= */
+
+setInterval(
+    updateTime,
+    1000
+);
+
+
+/* =========================
+   CHART RANGE
+========================= */
+
+if (chartRange) {
+
+    chartRange.addEventListener(
+        "change",
+        updateChart
+    );
+}
