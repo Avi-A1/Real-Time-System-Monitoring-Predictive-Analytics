@@ -1,811 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-    <title>Smart System Analytics</title>
-
-    <!-- Existing team CSS -->
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-    <!-- Chart.js -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/chart.js"
-    ></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEURONX | System Monitoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
-
 <body>
+  <main class="dashboard">
 
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo">N</div>
+        <div>
+          <strong>NEURON<span>X</span></strong>
+          <small>SYSTEM INTELLIGENCE</small>
+        </div>
+      </div>
 
-<div class="app">
+      <div class="top-meta">
+        <span class="live-indicator" id="liveStatus">● CONNECTING</span>
+        <span id="clock">--:--:--</span>
+        <span class="admin-avatar">D</span>
+        <span>Admin</span>
+      </div>
+    </header>
 
+    <section class="intro">
+      <div>
+        <p class="eyebrow">OVERVIEW / SYSTEM</p>
+        <h1>System Monitoring Dashboard</h1>
+        <p class="muted">Real-time system performance and resource intelligence</p>
+      </div>
 
-    <!-- ========================================== -->
-    <!-- SIDEBAR -->
-    <!-- ========================================== -->
+      <div class="actions">
+        <button class="outline-btn" id="exportBtn">↓ Export CSV</button>
+        <button class="outline-btn" id="refreshBtn">↻ Refresh</button>
+        <button class="primary-btn" id="monitorBtn">Ⅱ Stop Monitoring</button>
+      </div>
+    </section>
 
-    <aside class="sidebar">
+    <!-- TOP ROW: PLATFORM + CPU + MEMORY + DISK -->
+    <section class="top-metrics">
 
-        <div class="logo">
+      <article class="metric-card platform-card">
+        <div class="metric-title">
+          <span>PLATFORM</span>
+          <span class="green-text">● ACTIVE</span>
+        </div>
+        <div class="platform-os" id="platformOs">Ubuntu 24.04.4 LTS</div>
+        <div class="platform-meta">
+          <div>
+            <small>KERNEL</small>
+            <strong id="platformKernel">6.8.0-45-generic</strong>
+          </div>
+          <div>
+            <small>UPTIME</small>
+            <strong id="platformUptime">1d, 6h, 29m</strong>
+          </div>
+          <div>
+            <small>CORES</small>
+            <strong id="platformCores">8 vCPU</strong>
+          </div>
+        </div>
+      </article>
 
-            <div class="logo-box">
-                S
-            </div>
+      <article class="metric-card">
+        <div class="metric-title">
+          <span class="cyan-text">● CPU</span>
+          <span class="muted-tag" id="cpuLoadTag">LOAD</span>
+        </div>
+        <strong id="cpu">--%</strong>
+        <small>Processor utilization</small>
+        <div class="progress"><i id="cpuBar"></i></div>
+      </article>
 
+      <article class="metric-card">
+        <div class="metric-title">
+          <span class="yellow-text">● MEMORY</span>
+          <span class="muted-tag" id="memTotalTag">RAM</span>
+        </div>
+        <strong id="memory">--%</strong>
+        <small id="memSub">RAM utilization</small>
+        <div class="progress"><i id="memoryBar"></i></div>
+      </article>
+
+      <article class="metric-card">
+        <div class="metric-title">
+          <span class="green-text">● DISK</span>
+          <span class="muted-tag" id="diskTotalTag">STORAGE</span>
+        </div>
+        <strong id="disk">--%</strong>
+        <small id="diskSub">Storage utilization</small>
+        <div class="progress"><i id="diskBar"></i></div>
+      </article>
+
+    </section>
+
+    <!-- MIDDLE ROW: SERVICE STATUS + SYSTEM RESOURCES -->
+    <section class="middle-grid">
+
+      <article class="panel services-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">SYSTEM HEALTH</span>
+            <h2>Service Status</h2>
+          </div>
+          <span class="status-chip" id="serviceSummary">Checking</span>
+        </div>
+
+        <div class="service-list">
+
+          <div class="service-row">
+            <span class="service-dot" id="apiDot"></span>
             <div>
-
-                <h2>
-                    Smart System
-                </h2>
-
-                <span>
-                    Analytics
-                </span>
-
+              <b>Monitoring API</b>
+              <small>http://127.0.0.1:8000/system</small>
             </div>
+            <div class="service-right">
+              <span class="service-metric" id="apiLatency">203ms</span>
+              <strong id="apiStatus">Checking</strong>
+            </div>
+          </div>
 
-        </div>
-
-
-        <nav>
-
-            <a
-                href="#"
-                class="active"
-            >
-                ⌂
-                <span>
-                    Dashboard
-                </span>
-            </a>
-
-
-            <a href="#">
-
-                ◉
-
-                <span>
-                    Monitoring
-                </span>
-
-            </a>
-
-
-            <a href="#">
-
-                ▣
-
-                <span>
-                    Analytics
-                </span>
-
-            </a>
-
-
-            <a href="#">
-
-                ↗
-
-                <span>
-                    Predictions
-                </span>
-
-            </a>
-
-
-            <a href="#">
-
-                ⚠
-
-                <span>
-                    Alerts
-                </span>
-
-            </a>
-
-
-            <a href="#">
-
-                ⚙
-
-                <span>
-                    Settings
-                </span>
-
-            </a>
-
-        </nav>
-
-
-        <div class="online">
-
-            <span class="online-dot"></span>
-
-            System Online
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- ========================================== -->
-    <!-- MAIN -->
-    <!-- ========================================== -->
-
-    <main class="main">
-
-
-        <!-- ====================================== -->
-        <!-- HEADER -->
-        <!-- ====================================== -->
-
-        <header class="header">
-
+          <div class="service-row">
+            <span class="service-dot" id="historyDot"></span>
             <div>
-
-                <p class="welcome">
-                    WELCOME BACK
-                </p>
-
-                <h1>
-                    System Dashboard
-                </h1>
-
-                <p class="subtitle">
-                    Monitor and analyze your system in real time.
-                </p>
-
+              <b>History Service</b>
+              <small>http://127.0.0.1:8000/history</small>
             </div>
-
-
-            <div class="header-right">
-
-                <div class="live-badge">
-
-                    <span></span>
-
-                    LIVE
-
-                </div>
-
-
-                <div class="notification">
-
-                    🔔
-
-                </div>
-
-
-                <div class="avatar">
-
-                    DU
-
-                </div>
-
+            <div class="service-right">
+              <span class="service-metric" id="historyCount">222 pts</span>
+              <strong id="historyStatus">Checking</strong>
             </div>
+          </div>
 
-        </header>
-
-
-
-        <!-- ====================================== -->
-        <!-- SYSTEM HEALTH -->
-        <!-- ====================================== -->
-
-        <div class="health">
-
-            <div class="health-left">
-
-                <div class="health-icon">
-                    ✓
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        System Healthy
-                    </strong>
-
-                    <p>
-                        All monitored components are operating normally.
-                    </p>
-
-                </div>
-
+          <div class="service-row">
+            <span class="service-dot" id="predictionDot"></span>
+            <div>
+              <b>Prediction Service</b>
+              <small>http://127.0.0.1:8000/prediction</small>
             </div>
-
-
-            <div class="updated">
-
-                Last updated:
-
-                <strong id="time">
-                    Just now
-                </strong>
-
+            <div class="service-right">
+              <span class="service-metric" id="predictionScore">102ms</span>
+              <strong id="predictionServiceStatus">Checking</strong>
             </div>
+          </div>
 
         </div>
+      </article>
 
+      <article class="panel resources-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">LIVE PERFORMANCE</span>
+            <h2>System Resources</h2>
+          </div>
+          <span class="panel-note">Current usage</span>
+        </div>
 
+        <div class="gauges">
 
-        <!-- ====================================== -->
-        <!-- SYSTEM STATISTICS -->
-        <!-- ====================================== -->
-
-        <section class="stats">
-
-
-            <!-- CPU -->
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span>
-                        CPU Usage
-                    </span>
-
-                    <div class="stat-icon cpu-icon">
-                        CPU
-                    </div>
-
-                </div>
-
-
-                <!-- UPDATED: dynamic value -->
-
-                <h2 id="cpu">
-                    --%
-                </h2>
-
-
-                <div class="progress">
-
-                    <div
-                        id="cpuBar"
-                        style="width: 0%;"
-                    ></div>
-
-                </div>
-
-
-                <p>
-                    Processor utilization
-                </p>
-
+          <div class="gauge-wrap">
+            <div class="gauge" id="cpuGauge">
+              <div>
+                <b id="cpuGaugeValue">--%</b>
+                <small>CPU</small>
+              </div>
             </div>
+          </div>
 
-
-
-            <!-- MEMORY -->
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span>
-                        Memory Usage
-                    </span>
-
-                    <div class="stat-icon ram-icon">
-                        RAM
-                    </div>
-
-                </div>
-
-
-                <!-- UPDATED: dynamic value -->
-
-                <h2 id="memory">
-                    --%
-                </h2>
-
-
-                <div class="progress">
-
-                    <div
-                        id="memoryBar"
-                        style="width: 0%;"
-                    ></div>
-
-                </div>
-
-
-                <p>
-                    Memory utilization
-                </p>
-
+          <div class="gauge-wrap">
+            <div class="gauge purple-gauge" id="memoryGauge">
+              <div>
+                <b id="memoryGaugeValue">--%</b>
+                <small>MEMORY</small>
+              </div>
             </div>
+          </div>
 
-
-
-            <!-- DISK -->
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span>
-                        Disk Usage
-                    </span>
-
-                    <div class="stat-icon disk-icon">
-                        DISK
-                    </div>
-
-                </div>
-
-
-                <!-- UPDATED: dynamic value -->
-
-                <h2 id="disk">
-                    --%
-                </h2>
-
-
-                <div class="progress">
-
-                    <div
-                        id="diskBar"
-                        style="width: 0%;"
-                    ></div>
-
-                </div>
-
-
-                <p>
-                    Storage utilization
-                </p>
-
+          <div class="gauge-wrap">
+            <div class="gauge green-gauge" id="diskGauge">
+              <div>
+                <b id="diskGaugeValue">--%</b>
+                <small>DISK</small>
+              </div>
             </div>
+          </div>
 
+        </div>
+      </article>
 
+    </section>
 
-            <!-- NETWORK -->
+    <!-- 4 CHARTS -->
+    <section class="charts-grid">
 
-            <div class="stat-card">
+      <article class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">NETWORK ACTIVITY</span>
+            <h2>Network Traffic</h2>
+          </div>
+          <span class="panel-note" id="networkValue">-- MB/s</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="networkChart"></canvas>
+        </div>
+      </article>
 
-                <div class="stat-top">
+      <article class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">STORAGE PERFORMANCE</span>
+            <h2>Disk I/O</h2>
+          </div>
+          <span class="panel-note" id="diskIoValue">-- MB/s</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="diskChart"></canvas>
+        </div>
+      </article>
 
-                    <span>
-                        Network
-                    </span>
+      <article class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">PROCESSOR</span>
+            <h2>CPU Usage</h2>
+          </div>
+          <span class="panel-note" id="cpuChartValue">--%</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="cpuChart"></canvas>
+        </div>
+      </article>
 
-                    <div class="stat-icon network-icon">
-                        NET
-                    </div>
+      <article class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">MEMORY</span>
+            <h2>Memory Usage</h2>
+          </div>
+          <span class="panel-note" id="memoryChartValue">--%</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="memoryChart"></canvas>
+        </div>
+      </article>
 
-                </div>
+    </section>
 
+    <!-- BOTTOM SECTION: TOP PROCESSES TABLE + STORAGE -->
+    <section class="bottom-grid">
 
-                <!-- UPDATED: dynamic value -->
+      <article class="panel processes-panel" id="processes">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">SYSTEM ACTIVITY</span>
+            <h2>Top Processes</h2>
+          </div>
+          <span class="panel-note">CPU • Memory • Disk</span>
+        </div>
 
-                <h2 id="network">
-                    -- MB/s
-                </h2>
+        <div class="process-table-wrap">
+          <table class="process-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>CPU</th>
+                <th>Memory</th>
+                <th>Disk</th>
+              </tr>
+            </thead>
+            <tbody id="processList">
+              <tr>
+                <td colspan="4">Loading processes...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
 
+      <article class="panel storage-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">DISK MANAGEMENT</span>
+            <h2>Storage</h2>
+          </div>
+          <span class="panel-note" id="storagePercent">--% used</span>
+        </div>
 
-                <p class="stable">
-                    ● Live network activity
-                </p>
+        <div class="storage-visual">
 
+          <div class="storage-ring" id="storageRing">
+            <div>
+              <b id="storageValue">--%</b>
+              <small>USED</small>
             </div>
+          </div>
 
-
-        </section>
-
-
-
-        <!-- ====================================== -->
-        <!-- CHART + AI PREDICTION -->
-        <!-- ====================================== -->
-
-        <section class="dashboard-grid">
-
-
-            <!-- ================================== -->
-            <!-- CPU CHART -->
-            <!-- ================================== -->
-
-            <div class="panel chart-panel">
-
-
-                <div class="panel-title">
-
-                    <div>
-
-                        <h2>
-                            System Performance
-                        </h2>
-
-                        <p>
-                            Real-time CPU monitoring
-                        </p>
-
-                    </div>
-
-
-                    <select id="chartRange">
-
-                        <option value="30">
-                            Last 30 Minutes
-                        </option>
-
-                        <option value="60">
-                            Last 1 Hour
-                        </option>
-
-                        <option value="1440">
-                            Last 24 Hours
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="chart">
-
-                    <canvas id="cpuChart"></canvas>
-
-                </div>
-
+          <div class="storage-details">
+            <b id="storageLabel">Primary storage</b>
+            <small id="storageDescription">Waiting for system data</small>
+            <div class="progress">
+              <i id="storageBar"></i>
             </div>
+          </div>
 
+        </div>
+      </article>
 
+    </section>
 
-            <!-- ================================== -->
-            <!-- AI PREDICTION -->
-            <!-- ================================== -->
+    <footer>
+      NEURONX SYSTEM INTELLIGENCE
+      <span>•</span>
+      REAL-TIME MONITORING
+    </footer>
 
-            <div class="panel prediction-panel">
+  </main>
 
-
-                <div class="panel-title">
-
-                    <div>
-
-                        <h2>
-                            AI Prediction
-                        </h2>
-
-                        <p>
-                            System load forecast
-                        </p>
-
-                    </div>
-
-
-                    <span class="ai-badge">
-                        AI
-                    </span>
-
-                </div>
-
-
-                <div class="ai-symbol">
-                    ✦
-                </div>
-
-
-                <p class="prediction-label">
-                    Expected CPU Load
-                </p>
-
-
-                <!-- IMPORTANT:
-                     This ID connects to /prediction -->
-
-                <h3 id="predictionValue">
-                    --%
-                </h3>
-
-
-                <!-- IMPORTANT:
-                     Updated by JavaScript -->
-
-                <p
-                    id="predictionDescription"
-                    class="prediction-description"
-                >
-                    Waiting for ML prediction...
-                </p>
-
-
-                <!-- IMPORTANT:
-                     Updated by JavaScript -->
-
-                <div
-                    id="predictionStatus"
-                    class="prediction-status"
-                >
-                    Waiting for prediction...
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ====================================== -->
-        <!-- ALERTS + SYSTEM INFORMATION -->
-        <!-- ====================================== -->
-
-        <section class="bottom-grid">
-
-
-            <!-- ================================== -->
-            <!-- SYSTEM ALERTS -->
-            <!-- ================================== -->
-
-            <div class="panel">
-
-
-                <div class="panel-title">
-
-                    <div>
-
-                        <h2>
-                            System Alerts
-                        </h2>
-
-                        <p>
-                            Recent system notifications
-                        </p>
-
-                    </div>
-
-
-                    <button>
-                        View All
-                    </button>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- ML ANOMALY RESULT -->
-                <!-- ================================= -->
-
-                <div class="alert warning">
-
-                    <div class="alert-symbol">
-                        !
-                    </div>
-
-
-                    <div>
-
-                        <!-- Updated from /anomaly -->
-
-                        <strong id="anomalyTitle">
-                            Checking system...
-                        </strong>
-
-
-                        <!-- Updated from /anomaly -->
-
-                        <p id="anomalyDescription">
-                            Waiting for anomaly detection...
-                        </p>
-
-
-                        <!-- Updated from /anomaly -->
-
-                        <small id="anomalyStatus">
-                            Severity: --
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- CPU ALERT -->
-                <!-- ================================= -->
-
-                <div class="alert success">
-
-                    <div class="alert-symbol">
-                        ✓
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            CPU monitoring active
-                        </strong>
-
-                        <p>
-                            Real-time CPU monitoring is active.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ================================= -->
-                <!-- NETWORK ALERT -->
-                <!-- ================================= -->
-
-                <div class="alert success">
-
-                    <div class="alert-symbol">
-                        ✓
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            Network monitoring active
-                        </strong>
-
-                        <p>
-                            Live network activity is being monitored.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- ================================== -->
-            <!-- SYSTEM INFORMATION -->
-            <!-- ================================== -->
-
-            <div class="panel">
-
-
-                <div class="panel-title">
-
-                    <div>
-
-                        <h2>
-                            System Information
-                        </h2>
-
-                        <p>
-                            Current machine details
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Operating System -->
-
-                <div class="info">
-
-                    <span>
-                        Operating System
-                    </span>
-
-
-                    <!-- ID added for future backend data -->
-
-                    <strong id="operatingSystem">
-                        Detecting...
-                    </strong>
-
-                </div>
-
-
-
-                <!-- Processor -->
-
-                <div class="info">
-
-                    <span>
-                        Processor
-                    </span>
-
-
-                    <!-- ID added so we can remove hardcoded Intel -->
-
-                    <strong id="processor">
-                        Detecting...
-                    </strong>
-
-                </div>
-
-
-
-                <!-- RAM -->
-
-                <div class="info">
-
-                    <span>
-                        RAM
-                    </span>
-
-
-                    <!-- ID added so we can remove hardcoded 16 GB -->
-
-                    <strong id="ram">
-                        Detecting...
-                    </strong>
-
-                </div>
-
-
-
-                <!-- Monitoring -->
-
-                <div class="info">
-
-                    <span>
-                        Monitoring
-                    </span>
-
-
-                    <strong class="active">
-                        Active
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ====================================== -->
-        <!-- FOOTER -->
-        <!-- ====================================== -->
-
-        <footer>
-
-            Smart System Analytics © 2026
-
-        </footer>
-
-
-    </main>
-
-
-</div>
-
-
-
-<!-- ========================================== -->
-<!-- JAVASCRIPT -->
-<!-- ========================================== -->
-
-<script src="script.js"></script>
-
-
+  <script src="script.js"></script>
 </body>
-
 </html>
